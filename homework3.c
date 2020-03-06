@@ -10,7 +10,8 @@ int main(void)
     unsigned int count1 = 0;
 
     // TODO: Declare the variables that main uses to interact with your state machine.
-unsigned buttonhistory;
+unsigned char buttonhistory;
+bool pressed ;
 
     // Stops the Watchdog timer.
     initBoard();
@@ -48,19 +49,29 @@ unsigned buttonhistory;
         // YOU MUST WRITE timer1expired IN myTimer.c
         if(timer1Expired())
         {
-    buttonhistory =(buttonhistory<<1)|checkStatus_BoosterpackS1();
-           // fsmBoosterpackButtonS1(unsigned int buttonhistory);
+            if(checkStatus_BoosterpackS1())
+            {
+                buttonhistory =(buttonhistory<<1);
+                buttonhistory++;
+
+            }
+            else
+            {
+                buttonhistory =(buttonhistory<<1);
+            }
+
+
 
 
         }
 
         // TODO: Call the button state machine function to check for a completed, debounced button press.
         // YOU MUST WRITE THIS FUNCTION BELOW.
-      fsmBoosterpackButtonS1(buttonhistory);
+      pressed = fsmBoosterpackButtonS1(buttonhistory);
 
 
         // TODO: If a completed, debounced button press has occurred, increment count1.
-        if(fsmBoosterpackButtonS1(buttonhistory)){
+        if(pressed){
           count1++;
                 }
 
@@ -166,7 +177,7 @@ void changeBoosterpackLED(unsigned int count)
                         turnOn_BoosterpackLEDBlue();
                         break;
         case 7:
-                        turnOff_BoosterpackLEDRed();
+                        turnOn_BoosterpackLEDRed();
                         turnOn_BoosterpackLEDGreen();
                         turnOn_BoosterpackLEDBlue();
                         break;
@@ -178,25 +189,30 @@ void changeBoosterpackLED(unsigned int count)
 bool fsmBoosterpackButtonS1(unsigned char buttonhistory)
 {
     bool pressed = false;
-    typedef enum{DOWN,UP} states;
-     static int Bstate = UP;
-    switch(Bstate){
+    typedef enum{UP,DOWN} states;
+     static states currentstates = DOWN;
+    switch(currentstates){
     case(UP):
-    if(buttonhistory){
-        buttonhistory = DOWN;
+    if(buttonhistory & BIT0){ // this case is pressed right in the moment
+        currentstates = DOWN;
     pressed = true;
     }
-    else
+    else //wait to be pressed
+    {
+        currentstates = UP;
+        pressed = false;
+    }
 
-        buttonhistory = UP;
 
     break;
     case(DOWN):
-    if(!(buttonhistory)){
-        buttonhistory = UP;
+    if(buttonhistory & BIT0){   // keep pressing
+        currentstates = DOWN;
+        pressed = false;
     }
-    else{
-        buttonhistory = DOWN;
+    else{   //released
+        currentstates = UP;
+        pressed = false;
     }
    break;
     }

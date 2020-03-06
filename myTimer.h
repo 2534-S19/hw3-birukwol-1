@@ -35,3 +35,5 @@ bool timer1Expired(void);
 #define TIMER_RESOLUTION     TIMER32_32BIT
 
 #endif /* MYTIMER_H_ */
+
+

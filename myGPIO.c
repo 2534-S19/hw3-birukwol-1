@@ -72,7 +72,7 @@ unsigned char checkStatus_LaunchpadS2()
 // TODO: Create a function to return the status of Boosterpack Pushbutton S1
 unsigned char checkStatus_BoosterpackS1()
 {
-    return (GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN1));
+    return (GPIO_getInputPinValue(GPIO_PORT_P5, GPIO_PIN1) == 0);
 }
 
 // TODO: Create a function to return the status of Boosterpack Pushbutton S2
