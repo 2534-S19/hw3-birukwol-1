@@ -40,6 +40,21 @@ void initGPIO()
 
     GPIO_setAsOutputPin(GPIO_PORT_P5, GPIO_PIN6);
     // Turn off all LEDs at the start.
+    GPIO_setOutputLowOnPin(GPIO_PORT_P1, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN0);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN1);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN2);
+
+
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN4);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P5, GPIO_PIN6);
+    GPIO_setOutputLowOnPin(GPIO_PORT_P2, GPIO_PIN6);
+
+
+
+
+
+
 }
 
 // TODO: Create a function to return the status of Launchpad Pushbutton S1

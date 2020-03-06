@@ -178,9 +178,9 @@ void changeBoosterpackLED(unsigned int count)
 bool fsmBoosterpackButtonS1(unsigned char buttonhistory)
 {
     bool pressed = false;
-    typedef enum{UP,DOWN} states;
-    static int Bstates = UP;
-    switch(Bstates){
+    typedef enum{DOWN,UP} states;
+     static int Bstate = UP;
+    switch(Bstate){
     case(UP):
     if(buttonhistory){
         buttonhistory = DOWN;
